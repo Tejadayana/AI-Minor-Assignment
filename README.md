@@ -6,10 +6,19 @@ my father’s son.” Use the rules of the family domain (Section 8.3.2 on page 
 Textbook) to find who that man is using a Prolog program.
      
 **TODO:**      
-Save the above code to a file called **riddle.pl**    
+Save the above code to a file called **riddle_solution.pl**    
 Open SWI-Prolog.    
-Load the program by entering the following in SWI-Prolog : **?- [riddle].**    
-Query to find "that man": **?- that_man(X).**   
+Load the program by entering the following in SWI-Prolog : **swipl -f -q riddle_solution.pl**     
+
+**Explanation:**     
+    
+**Family Relationship:**     
+father(john, speaker) means that John is the father of the speaker.    
+father(speaker, X) means that "that man" (X) is the speaker's son.        
+**Path Logic:**      
+that_man(X) is used to find the person who fits the description in the riddle.     
+path defines how to solve the puzzle recursively. However, since the puzzle is simple, we immediately resolve the relation.      
+Query: When the program runs, it will determine that "that man" (X) is the speaker's son.          
     
    
 **Question 2:**    
