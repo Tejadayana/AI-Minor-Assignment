@@ -1,13 +1,34 @@
-% Define the family relationship where 'father(X, Y)' means 'X is the father of Y'.
+#!/usr/bin/swipl -f -q
 
-% Let's assume 'john' is the father of 'me' (the speaker).
-father(john, me).  
+/* Function to display output */
+writenlist([]) :- nl.
+writenlist([H|T]) :-
+    write(H),
+    write(' '),
+    writenlist(T).
 
-% Define the rule to find 'that man' based on the riddle.
-% 'X' is the man whose father is 'my father's son'.
+/* Family relationships */
+father(john, speaker).
+
+/* Rule to find 'that man' */
 that_man(X) :-
-    father(john, me),   % 'me' is the son of 'john'
-    father(me, X).      % 'X' is the son of 'me', making 'X' the speaker's son.
+    father(john, speaker),
+    father(speaker, X).
 
-% Example Query:
-% ?- that_man(X).
+/* Solution path */
+path(Goal, Goal, List) :-
+    write('Solution Path: '), nl,
+    reverse_writenlist(List).
+
+/* Make move to find the man */
+path(State, Goal, List) :-
+    that_man(State),
+    not(member(State, List)),
+    path(State, Goal, [State|List]),
+    !.
+
+/* Initial call to run the program */
+:- 
+    that_man(X),
+    write('That man is: '), writenlist([X]),
+    halt(0).
