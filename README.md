@@ -6,14 +6,28 @@ my father’s son.” Use the rules of the family domain (Section 8.3.2 on page 
 Textbook) to find who that man is using a Prolog program.
    
 **TODO:**    
-Save the above code to a file called **riddle.pl.**    
+Save the above code to a file called **riddle.pl**    
 Open SWI-Prolog.    
 Load the program by entering the following in SWI-Prolog : **?- [riddle].**    
 Query to find "that man": **?- that_man(X).**   
     
-
+   
 **Question 2:**    
 A man, a woman and two children had to go to the opposite bank of a river using a boat.
 The man and the woman weighed 80 kg each and the children weighed 30 kg each.
 Given that the boat can carry upto 100 kg and that everyone can drive a boat, write a
 Prolog program to find how all four can cross the river with the boat.
+**TODO:**    
+Save the code into a file called **river_crossing.pl**  
+Open SWI-Prolog.   
+Load and run the file:  **swipl -f -q river_crossing.pl**     
+SWI-Prolog will print the solution path, showing how the man, woman, and two children cross the river.
+
+**Explanation:**    
+**state(X, Bank1, Bank2)** represents the state of the boat and banks. X is the current bank of the boat (e for East and w for West).     
+**Bank1** represents the people on the current bank, and **Bank2** represents the people on the opposite bank.    
+**opposite(e, w)** and **opposite(w, e)** define moving the boat from one bank to the other.    
+**unsafe(state(_, BoatPassengers))** ensures that the boat doesn’t exceed the 100 kg limit when moving between banks.   
+**move** handles the actual transfer of people across the river.   
+**transfer** checks if a transfer is valid (i.e., the total weight on the boat is ≤ 100 kg).   
+The **path** function recursively tries moves until the goal state is reached (state(w, [], [80, 80, 30, 30])).      
