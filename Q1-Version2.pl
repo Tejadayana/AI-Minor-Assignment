@@ -1,34 +1,17 @@
 #!/usr/bin/swipl -f -q
 
-/* Function to display output */
-writenlist([]) :- nl.
-writenlist([H|T]) :-
-    write(H),
-    write(' '),
-    writenlist(T).
+% Define family relationships
+father(john, speaker).       % John is the father of the speaker
+father(speaker, that_man).   % The speaker is the father of 'that man'
 
-/* Family relationships */
-father(john, speaker).
+% Rule to find 'that man'
+find_that_man(X) :-
+    father(john, speaker),   % Speaker's father is John
+    father(speaker, X).      % 'X' is that man's father
 
-/* Rule to find 'that man' */
-that_man(X) :-
-    father(john, speaker),
-    father(speaker, X).
-
-/* Solution path */
-path(Goal, Goal, List) :-
-    write('Solution Path: '), nl,
-    reverse_writenlist(List).
-
-/* Make move to find the man */
-path(State, Goal, List) :-
-    that_man(State),
-    not(member(State, List)),
-    path(State, Goal, [State|List]),
-    !.
-
-/* Initial call to run the program */
+% Initial call to find and display the solution
 :- 
-    that_man(X),
-    write('That man is: '), writenlist([X]),
+    find_that_man(X),
+    write('That man is: '), write(X), nl,
     halt(0).
+
